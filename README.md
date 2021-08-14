@@ -2,7 +2,7 @@
 
 ### Prerequisites
 - Make sure that an ldap server is running and configure the src/main/resources/login.config file to target that server.
-- As this example using the JDK's LDAPLoginModule, the location of login.config has to be specified as a value of `java.security.auth.login.config` system property.
+- As this example uses JDK's LDAPLoginModule, the location of login.config has to be specified as a value of `java.security.auth.login.config` system property.
   So either run the jvm with `-Djava.security.auth.login.config=src/main/resources/login.config` or add this to the start of the run method:
  `System.setProperty("java.security.auth.login.config", "src/main/resources/login.config");`
 
