@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://camel.apache.org/schema/cxf https://camel.apache.org/schema/cxf/camel-cxf.xsd">
+    <!-- Camel Routes -->
+    <cxf:cxfEndpoint id="get" address="http://localhost:8082/get" serviceClass="org.example.WebService">
+      <cxf:inInterceptors>
+          <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+              <property name="properties">
+                  <map>
+                      <entry key="action" value="UsernameToken"/>
+                      <entry key="passwordType" value="PasswordText"/>
+                  </map>
+              </property>
+          </bean>
+          <ref bean="login"/>
+          <ref bean="log"/>
+      </cxf:inInterceptors>
+        <cxf:properties>
+            <entry key="ws-security.validate.token" value="false"/>
+        </cxf:properties>
+    </cxf:cxfEndpoint>
+
+    <bean id="log" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+
+
+    <bean id="login" class="org.apache.cxf.interceptor.security.JAASLoginInterceptor">
+        <property name="contextName" value="cxf"/>
+    </bean>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="cxf:bean:get"/>
+            <process ref="bodyProc"/>
+            <log message="${body}"/>
+        </route>
+    </camelContext>
+
+    <bean id="bodyProc" class="org.example.BodyProc"/>
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<soapenv:Envelope xmlns:exam="http://example.org/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header>
+        <wsse:Security soapenv:mustUnderstand="1"
+                       xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                       xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+            <wsse:UsernameToken wsu:Id="UsernameToken-25F2C8706950BD3BA6162893094692238">
+                <wsse:Username>your_username</wsse:Username>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">
+                    your_password
+                </wsse:Password>
+                <wsse:Nonce
+                        EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">
+                    ExNeNeb2frBaI4feXFGd/w==
+                </wsse:Nonce>
+                <wsu:Created>2021-08-14T08:49:06.922Z</wsu:Created>
+            </wsse:UsernameToken>
+        </wsse:Security>
+    </soapenv:Header>
+    <soapenv:Body>
+        <exam:get/>
+    </soapenv:Body>
+</soapenv:Envelope>
